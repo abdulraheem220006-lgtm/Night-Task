@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitAI - AI-Powered Personal Trainer</title>
+  <!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+        darkMode: 'class'
+    }
+</script>>
+    
+    <!-- Bootstrap CSS (Grid & Utilities) & Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap-grid.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .glow-effect {
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.25);
+        }
+        .glass-card {
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="antialiased bg-slate-950 text-slate-100 dark:bg-slate-950 dark:text-slate-100 [&:not(.dark)]:bg-slate-50 [&:not(.dark)]:text-slate-800">
+
+    <!-- Header / Navbar -->
+    <nav class="sticky top-0 z-50 glass-card py-4 px-6 border-b border-slate-800/80 bg-slate-900/80 dark:bg-slate-900/80 [&:not(.dark)]:bg-white/80 [&:not(.dark)]:border-slate-200">
+        <div class="container flex justify-between items-center mx-auto">
+            <div class="flex items-center space-x-2">
+                <i class="bi bi-cpu-fill text-emerald-500 text-3xl"></i>
+                <span class="text-2xl font-extrabold tracking-tight">Fit<span class="text-emerald-500">AI</span></span>
+            </div>
+            
+            <div class="hidden md:flex space-x-8 font-semibold text-slate-400 [&:not(.dark)]:text-slate-600">
+                <a href="#workout-planner" class="hover:text-emerald-500 transition">AI Workout</a>
+                <a href="#calorie-calc" class="hover:text-emerald-500 transition">Macros</a>
+                <a href="#water-tracker" class="hover:text-emerald-500 transition">Water Tracker</a>
+                <a href="#strength-calc" class="hover:text-emerald-500 transition">1RM Calc</a>
+                <a href="#ai-chat" class="hover:text-emerald-500 transition">AI Coach</a>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <!-- Dark / Light Mode Toggle Button -->
+                <button onclick="toggleTheme()" id="theme-btn" class="p-2.5 rounded-full bg-slate-800 text-amber-400 dark:bg-slate-800 dark:text-amber-400 [&:not(.dark)]:bg-slate-200 [&:not(.dark)]:text-slate-700 transition hover:scale-105">
+                    <i class="bi bi-sun-fill text-lg dark:inline hidden"></i>
+                    <i class="bi bi-moon-stars-fill text-lg dark:hidden inline"></i>
+                </button>
+
+                <button onclick="document.getElementById('workout-planner').scrollIntoView({behavior: 'smooth'})" 
+                        class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2 px-5 rounded-full transition glow-effect text-sm">
+                    Get Started
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative py-20 px-6 overflow-hidden">
+        <div class="container mx-auto text-center relative z-10 max-w-4xl">
+            <span class="bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 px-4 py-1.5 rounded-full text-sm font-semibold inline-block mb-6">
+                <i class="bi bi-stars mr-1"></i> Next-Gen AI Fitness Suite
+            </span>
+            <h1 class="text-4xl md:text-6xl font-black leading-tight mb-6">
+                Transform Your Body with <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500">Precision AI</span>
+            </h1>
+            <p class="text-slate-400 [&:not(.dark)]:text-slate-600 text-lg md:text-xl mb-8 max-w-2xl mx-auto">
+                Custom workout routines, diet macros, hydrations tracking, and instant strength calculation—all in one place.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#workout-planner" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 px-8 rounded-xl transition text-lg shadow-lg shadow-emerald-500/20">
+                    Generate My Workout
+                </a>
+                <a href="#ai-chat" class="bg-slate-900 border border-slate-800 hover:bg-slate-800 [&:not(.dark)]:bg-white [&:not(.dark)]:border-slate-300 [&:not(.dark)]:hover:bg-slate-100 font-semibold py-3.5 px-8 rounded-xl transition text-lg">
+                    Chat with AI Coach
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Workout Generator Tool -->
+    <section id="workout-planner" class="py-12 px-6">
+        <div class="container mx-auto max-w-5xl">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold mb-2">AI Workout Plan Generator</h2>
+                <p class="text-slate-400 [&:not(.dark)]:text-slate-600">Apna goal aur level select karein, AI minutes mein custom routine banaye ga.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-slate-900/80 dark:bg-slate-900/80 [&:not(.dark)]:bg-white border border-slate-800 dark:border-slate-800 [&:not(.dark)]:border-slate-200 p-8 rounded-2xl shadow-xl">
+                <!-- Form Inputs -->
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Fitness Goal</label>
+                        <select id="goal" class="w-full bg-slate-950 dark:bg-slate-950 [&:not(.dark)]:bg-slate-100 border border-slate-700 dark:border-slate-700 [&:not(.dark)]:border-slate-300 rounded-xl p-3 focus:border-emerald-500 focus:outline-none">
+                            <option value="Muscle Gain">Muscle Gain (Muscles Banana)</option>
+                            <option value="Fat Loss">Fat Loss (Wazan Kam Karna)</option>
+                            <option value="Endurance">Endurance & Cardio</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Fitness Level</label>
+                        <select id="level" class="w-full bg-slate-950 dark:bg-slate-950 [&:not(.dark)]:bg-slate-100 border border-slate-700 dark:border-slate-700 [&:not(.dark)]:border-slate-300 rounded-xl p-3 focus:border-emerald-500 focus:outline-none">
+                            <option value="Beginner">Beginner (Naya Shuruat)</option>
+                            <option value="Intermediate">Intermediate (Kuch experience hai)</option>
+                            <option value="Advanced">Advanced (Experienced)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Equipment Available</label>
+                        <select id="equipment" class="w-full bg-slate-950 dark:bg-slate-950 [&:not(.dark)]:bg-slate-100 border border-slate-700 dark:border-slate-700 [&:not(.dark)]:border-slate-300 rounded-xl p-3 focus:border-emerald-500 focus:outline-none">
+                            <option value="Full Gym">Full Gym Access</option>
+                            <option value="Dumbbells Only">Home (Dumbbells Only)</option>
+                            <option value="Bodyweight">Bodyweight Only (No Equipment)</option>
+                        </select>
+                    </div>
+
+                    <button onclick="generateWorkout()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 rounded-xl transition mt-2">
+                        <i class="bi bi-cpu mr-2"></i> Generate AI Plan
+                    </button>
+                </div>
+
+                <!-- Output Display -->
+                <div class="bg-slate-950/80 dark:bg-slate-950/80 [&:not(.dark)]:bg-slate-50 border border-slate-800 dark:border-slate-800 [&:not(.dark)]:border-slate-200 p-6 rounded-xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-4 border-b border-slate-800 dark:border-slate-800 [&:not(.dark)]:border-slate-200">
+                            <h3 class="font-bold text-emerald-500 text-lg">Your Personalized Plan</h3>
+                            <span id="plan-badge" class="text-xs bg-slate-800 text-slate-400 px-2.5 py-1 rounded-full">Ready</span>
+                        </div>
+                        <div id="workout-output" class="mt-4 space-y-3 text-sm">
+                            <p class="text-slate-500 italic">Select your options and click "Generate AI Plan"...</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800 dark:border-slate-800 [&:not(.dark)]:border-slate-200 text-xs text-slate-500 text-center">
+                        Powered by FitAI Neural Engine
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW FEATURE 1: AI Water Intake Tracker -->
+    <section id="water-tracker" class="py-12 px-6">
+        <div class="container mx-auto max-w-4xl">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-2"><i class="bi bi-droplet-fill text-cyan-400 mr-2"></i>AI Water Hydration Tracker</h2>
+                <p class="text-slate-400 [&:not(.dark)]:text-slate-600">Daily hydration level monitoring karke active rahein.</p>
+            </div>
+
+            <div class="bg-slate-900/80 dark:bg-slate-900/80 [&:not(.dark)]:bg-white border border-slate-800 dark:border-slate-800 [&:not(.dark)]:border-slate-200 p-8 rounded-2xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="w-full md:w-1/2">
+                    <div class="flex justify-between text-sm font-semibold mb-2">
+                        <span>Daily Goal: <span id="water-goal-text">3000</span> ml</span>
+                        <span id="water-percent" class="text-cyan-400">0%</span>
+                    </div>
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-slate-800 dark:bg-slate-800 [&:not(.dark)]:bg-slate-200 rounded-full h-5 overflow-hidden p-1">
+                        <div id="water-bar" class="bg-gradient-to-r from-cyan-500 to-blue-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-2">Current Intake: <span id="water-current" class="font-bold text-slate-200 [&:not(.dark)]:text-slate-800">0</span> / 3000 ml</p>
+                </div>
+
+                <div class="flex gap-3 w-full md:w-auto">
+                    <button onclick="addWater(250)" class="flex-1 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500 hover:text-slate-950 font-bold py-3 px-5 rounded-xl transition">
+                        +250 ml <i class="bi bi-cup-hot"></i>
+                    </button>
+                    <button onclick="addWater(500)" class="flex-1 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500 hover:text-slate-950 font-bold py-3 px-5 rounded-xl transition">
+                        +500 ml <i class="bi bi-cup-straw"></i>
+                    </button>
+                    <button onclick="resetWater()" class="bg-slate-800 text-slate-400 hover:bg-rose-500/20 hover:text-rose-400 p-3 rounded-xl transition">
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW FEATURE 2: 1-Rep Max (1RM) Calculator -->
+    <section id="strength-calc" class="py-12 px-6">
+        <div class="container mx-auto max-w-4xl">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-2"><i class="bi bi-lightning-charge-fill text-amber-400 mr-2"></i>1-Rep Max (1RM) Strength Calculator</h2>
+                <p class="text-slate-400 [&:not(.dark)]:text-slate-600">Pata karein ke aap ek rep mein kitna maximum wazan utha sakte hain.</p>
+            </div>
+
+            <div class="bg-slate-900/80 dark:bg-slate-900/80 [&:not(.dark)]:bg-white border border-slate-800 dark:border-slate-800 [&:not(.dark)]:border-slate-200 p-8 rounded-2xl shadow-xl grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Weight Lifted (kg)</label>
+                    <input type="number" id="rm-weight" value="80" class="w-full bg-slate-950 dark:bg-slate-950 [&:not(.dark)]:bg-slate-100 border border-slate-700 dark:border-slate-700 [&:not(.dark)]:border-slate-300 rounded-xl p-3 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Reps Performed</label>
+                    <input type="number" id="rm-reps" value="5" class="w-full bg-slate-950 dark:bg-slate-950 [&:not(.dark)]:bg-slate-100 border border-slate-700 dark:border-slate-700 [&:not(.dark)]:border-slate-300 rounded-xl p-3 focus:outline-none">
+                </div>
+                <div class="flex items-end">
+                    <button onclick="calculate1RM()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3.5 rounded-xl transition">
+                        Calculate 1RM
+                    </button>
+                </div>
+
+                <div id="rm-output" class="hidden md:col-span-3 mt-4 pt-6 border-t border-slate-800 dark:border-slate-800 [&:not(.dark)]:border-slate-200 text-center">
+                    <span class="text-slate-400 text-sm block mb-1">Estimated 1-Rep Max (1RM)</span>
+                    <span id="rm-result" class="text-4xl font-black text-amber-400">0</span> <span class="text-lg font-bold">kg</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calorie & Macro Calculator -->
+    <section id="calorie-calc" class="py-12 px-6">
+        <div class="container mx-auto max-w-4xl">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-2">AI Smart Calorie & Macro Calculator</h2>
+                <p class="text-slate-400 [&:not(.dark)]:text-slate-600">Calculate daily calories & nutrition breakdown.</p>
+            </div>
+
+            <div class="bg-slate-900/80 dark:bg-slate-900/80 [&:not(.dark)]:bg-white border border-slate-800 dark:border-slate-800 [&:not(.dark)]:border-slate-200 p-8 rounded-2xl shadow-xl grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Weight (kg)</label>
+                    <input type="number" id="weight" value="70" class="w-full bg-slate-950 dark:bg-slate-950 [&:not(.dark)]:bg-slate-100 border border-slate-700 dark:border-slate-700 [&:not(.dark)]:border-slate-300 rounded-lg p-3 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Height (cm)</label>
+                    <input type="number" id="height" value="175" class="w-full bg-slate-950 dark:bg-slate-950 [&:not(.dark)]:bg-slate-100 border border-slate-700 dark:border-slate-700 [&:not(.dark)]:border-slate-300 rounded-lg p-3 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Age</label>
+                    <input type="number" id="age" value="25" class="w-full bg-slate-950 dark:bg-slate-950 [&:not(.dark)]:bg-slate-100 border border-slate-700 dark:border-slate-700 [&:not(.dark)]:border-slate-300 rounded-lg p-3 focus:outline-none">
+                </div>
+
+                <div class="md:col-span-3">
+                    <button onclick="calculateMacros()" class="w-full bg-cyan-500 hover:bg-cyan-600 text-slate-950 font-bold py-3 rounded-xl transition">
+                        Calculate Macros
+                    </button>
+                </div>
+
+                <div id="macro-results" class="hidden md:col-span-3 grid grid-cols-1 sm:grid-cols-4 gap-4 mt-4 pt-6 border-t border-slate-800 dark:border-slate-800 [&:not(.dark)]:border-slate-200 text-center">
+                    <div class="bg-slate-950 dark:bg-slate-950 [&:not(.dark)]:bg-slate-100 p-4 rounded-xl">
+                        <span class="text-slate-400 text-xs block mb-1">Daily Calories</span>
+                        <span id="res-calories" class="text-2xl font-black text-emerald-400">0</span> kcal
+                    </div>
+                    <div class="bg-slate-950 dark:bg-slate-950 [&:not(.dark)]:bg-slate-100 p-4 rounded-xl">
+                        <span class="text-slate-400 text-xs block mb-1">Protein</span>
+                        <span id="res-protein" class="text-2xl font-black text-cyan-400">0</span>g
+                    </div>
+                    <div class="bg-slate-950 dark:bg-slate-950 [&:not(.dark)]:bg-slate-100 p-4 rounded-xl">
+                        <span class="text-slate-400 text-xs block mb-1">Carbs</span>
+                        <span id="res-carbs" class="text-2xl font-black text-amber-400">0</span>g
+                    </div>
+                    <div class="bg-slate-950 dark:bg-slate-950 [&:not(.dark)]:bg-slate-100 p-4 rounded-xl">
+                        <span class="text-slate-400 text-xs block mb-1">Fats</span>
+                        <span id="res-fats" class="text-2xl font-black text-rose-400">0</span>g
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Chatbot Assistant Section -->
+    <section id="ai-chat" class="py-12 px-6">
+        <div class="container mx-auto max-w-3xl">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-2">Live AI Fitness Coach</h2>
+                <p class="text-slate-400 [&:not(.dark)]:text-slate-600">Ask any question about diet, workouts, or recovery.</p>
+            </div>
+
+            <div class="bg-slate-900/80 dark:bg-slate-900/80 [&:not(.dark)]:bg-white border border-slate-800 dark:border-slate-800 [&:not(.dark)]:border-slate-200 rounded-2xl overflow-hidden flex flex-col h-[450px] shadow-xl">
+                <div class="bg-slate-800/80 dark:bg-slate-800/80 [&:not(.dark)]:bg-slate-100 p-4 border-b border-slate-700 dark:border-slate-700 [&:not(.dark)]:border-slate-200 flex items-center space-x-3">
+                    <div class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></div>
+                    <span class="font-bold text-sm">FitAI Assistant (Active)</span>
+                </div>
+
+                <!-- Chat Box -->
+                <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-4">
+                    <div class="flex items-start space-x-3">
+                        <div class="bg-emerald-500/20 text-emerald-400 p-2 rounded-lg"><i class="bi bi-robot"></i></div>
+                        <div class="bg-slate-800 dark:bg-slate-800 [&:not(.dark)]:bg-slate-100 p-3 rounded-2xl text-sm max-w-[80%]">
+                            Hello! Main aapka AI Fitness Coach hoon. Aap ki fitness ya diet se mutaliq koi sawal hai?
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Field -->
+                <div class="p-3 border-t border-slate-800 dark:border-slate-800 [&:not(.dark)]:border-slate-200 bg-slate-950 dark:bg-slate-950 [&:not(.dark)]:bg-slate-50 flex space-x-2">
+                    <input type="text" id="chat-input" placeholder="Type your fitness question..." 
+                           class="flex-1 bg-slate-800 dark:bg-slate-800 [&:not(.dark)]:bg-white border border-slate-700 dark:border-slate-700 [&:not(.dark)]:border-slate-300 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-emerald-500"
+                           onkeypress="if(event.key === 'Enter') sendMessage()">
+                    <button onclick="sendMessage()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-5 py-2 rounded-xl text-sm transition">
+                        Send
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 dark:border-slate-800 [&:not(.dark)]:border-slate-200 py-8 px-6 text-center text-slate-500 text-sm">
+        <p>&copy; 2026 FitAI Technologies. Built with HTML, Tailwind CSS & JavaScript.</p>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Theme Toggle Functionality
+      // Theme Toggle Functionality
+function toggleTheme() {
+    const htmlElement = document.documentElement;
+    
+    if (htmlElement.classList.contains('dark')) {
+        htmlElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+    } else {
+        htmlElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+    }
+}
+
+// Page load par previous choice maintain rakhne ke liye
+(function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        document.documentElement.classList.remove('dark');
+    } else {
+        document.documentElement.classList.add('dark');
+    }
+})();
+
+        // 1. AI Workout Generator
+        function generateWorkout() {
+            const goal = document.getElementById('goal').value;
+            const level = document.getElementById('level').value;
+            const equip = document.getElementById('equipment').value;
+            const output = document.getElementById('workout-output');
+            const badge = document.getElementById('plan-badge');
+
+            badge.textContent = "Generated";
+            badge.className = "text-xs bg-emerald-500/20 text-emerald-400 px-2.5 py-1 rounded-full border border-emerald-500/30";
+
+            let exercises = [];
+            if (equip === 'Full Gym') {
+                exercises = ['Barbell Bench Press (4x8)', 'Lat Pulldowns (4x10)', 'Squats (4x8)', 'Dumbbell Shoulder Press (3x12)'];
+            } else if (equip === 'Dumbbells Only') {
+                exercises = ['Dumbbell Goblet Squats (4x12)', 'Dumbbell Floor Press (4x10)', 'Dumbbell Rows (4x12)', 'Lateral Raises (3x15)'];
+            } else {
+                exercises = ['Push-ups (4xMax)', 'Bodyweight Squats (4x20)', 'Walking Lunges (3x15)', 'Plank Hold (3x60s)'];
+            }
+
+            output.innerHTML = `
+                <div class="font-semibold mb-2">${goal} Plan (${level})</div>
+                <ul class="space-y-2">
+                    ${exercises.map(ex => `<li class="flex items-center space-x-2"><i class="bi bi-check-circle-fill text-emerald-500 text-xs"></i> <span>${ex}</span></li>`).join('')}
+                </ul>
+                <div class="mt-4 p-3 bg-slate-800/60 dark:bg-slate-800/60 [&:not(.dark)]:bg-slate-200/60 rounded-lg text-xs text-slate-400 [&:not(.dark)]:text-slate-600">
+                    <i class="bi bi-info-circle mr-1 text-cyan-400"></i> Rest 60-90 seconds between sets. Keep hydrated!
+                </div>
+            `;
+        }
+
+        // 2. Water Hydration Tracker
+        let currentWater = 0;
+        const goalWater = 3000;
+
+        function addWater(amount) {
+            currentWater = Math.min(currentWater + amount, goalWater);
+            updateWaterUI();
+        }
+
+        function resetWater() {
+            currentWater = 0;
+            updateWaterUI();
+        }
+
+        function updateWaterUI() {
+            const percent = Math.round((currentWater / goalWater) * 100);
+            document.getElementById('water-current').textContent = currentWater;
+            document.getElementById('water-percent').textContent = percent + '%';
+            document.getElementById('water-bar').style.width = percent + '%';
+        }
+
+        // 3. 1RM Strength Calculator (Epley Formula)
+        function calculate1RM() {
+            const weight = parseFloat(document.getElementById('rm-weight').value) || 0;
+            const reps = parseFloat(document.getElementById('rm-reps').value) || 0;
+
+            if (weight > 0 && reps > 0) {
+                const oneRepMax = Math.round(weight * (1 + (reps / 30)));
+                document.getElementById('rm-result').textContent = oneRepMax;
+                document.getElementById('rm-output').classList.remove('hidden');
+            }
+        }
+
+        // 4. Calorie & Macro Calculator
+        function calculateMacros() {
+            const w = parseFloat(document.getElementById('weight').value) || 70;
+            const h = parseFloat(document.getElementById('height').value) || 175;
+            const a = parseFloat(document.getElementById('age').value) || 25;
+
+            const bmr = (10 * w) + (6.25 * h) - (5 * a) + 5;
+            const calories = Math.round(bmr * 1.4);
+            const protein = Math.round(w * 2);
+            const fats = Math.round((calories * 0.25) / 9);
+            const carbs = Math.round((calories - (protein * 4 + fats * 9)) / 4);
+
+            document.getElementById('res-calories').textContent = calories;
+            document.getElementById('res-protein').textContent = protein;
+            document.getElementById('res-carbs').textContent = carbs;
+            document.getElementById('res-fats').textContent = fats;
+
+            document.getElementById('macro-results').classList.remove('hidden');
+        }
+
+        // 5. AI Chatbot Assistant
+        // 5. Advanced AI Chatbot Assistant Engine
+function sendMessage() {
+    const input = document.getElementById('chat-input');
+    const messages = document.getElementById('chat-messages');
+    const userText = input.value.trim();
+
+    if (!userText) return;
+
+    // User Message Render Karein
+    messages.innerHTML += `
+        <div class="flex items-start justify-end space-x-3">
+            <div class="bg-emerald-500 text-slate-950 font-semibold p-3 rounded-2xl text-sm max-w-[80%] shadow-md">
+                ${userText}
+            </div>
+        </div>
+    `;
+
+    input.value = '';
+    messages.scrollTop = messages.scrollHeight;
+
+    // Typing Indicator Display Karein
+    const typingId = 'typing-' + Date.now();
+    messages.innerHTML += `
+        <div id="${typingId}" class="flex items-start space-x-3">
+            <div class="bg-emerald-500/20 text-emerald-400 p-2 rounded-lg"><i class="bi bi-robot"></i></div>
+            <div class="bg-slate-800 dark:bg-slate-800 [&:not(.dark)]:bg-slate-100 p-3 rounded-2xl text-sm text-slate-400 italic">
+                FitAI Coach typing<span class="animate-pulse">...</span>
+            </div>
+        </div>
+    `;
+    messages.scrollTop = messages.scrollHeight;
+
+    // Smart AI Response Logic
+    setTimeout(() => {
+        // Typing indicator remove karein
+        const typingElem = document.getElementById(typingId);
+        if (typingElem) typingElem.remove();
+
+        const query = userText.toLowerCase();
+        let aiReply = "";
+
+        // Intelligent Keyword Matching Engine
+        if (query.includes('protein') || query.includes('diet') || query.includes('khana')) {
+            aiReply = "<b>Diet Tip:</b> Muscle building ke liye daily 1.6g-2g per kg protein lain. High protein foods: Chicken Breast, Eggs, Fish, Cottage Cheese (Paneer), Lentils (Daal) aur Whey Protein.";
+        } 
+        else if (query.includes('fat loss') || query.includes('weight loss') || query.includes('wazan kam')) {
+            aiReply = "<b>Fat Loss Strategy:</b> Daily maintenance calories se 300-500 calories kam khayein (Calorie Deficit). Weight training + daily 8,000-10,000 steps zaroori hain.";
+        } 
+        else if (query.includes('creatine') || query.includes('supplement')) {
+            aiReply = "<b>Supplements Guide:</b> Creatine Monohydrate (3g-5g daily) strength aur muscle volume ke liye sab se researched aur safe supplement hai. Daily 3-4 Litre paani zaroor peeyan!";
+        } 
+        else if (query.includes('biceps') || query.includes('chest') || query.includes('abs') || query.includes('workout')) {
+            aiReply = "<b>Workout Advice:</b> Har muscle group ko hafte mein 2 baar train karein. Progressive Overload (dheere dheere weight ya reps barhana) sab se zaroori rule hai.";
+        } 
+        else if (query.includes('cardio') || query.includes('running') || query.includes('hiit')) {
+            aiReply = "<b>Cardio Plan:</b> Agar goal fat loss hai toh weight training ke baad 15-20 min HIIT ya 30 min Moderate Incline Treadmill walk karein.";
+        }
+        else if (query.includes('sleep') || query.includes('neend') || query.includes('rest')) {
+            aiReply = "<b>Recovery Tip:</b> Muscle gym mein nahi, sone ke dauran bante hain! Daily 7-8 ghante ki gehri neend zaroori hai.";
+        }
+        else if (query.includes('hi') || query.includes('hello') || query.includes('salam') || query.includes('hey')) {
+            aiReply = "Walaikum Assalam! Main aapka AI Fitness Coach hoon. Aaj aap Workout, Diet, ya Supplements ke bare mein kya poochna chahte hain?";
+        } 
+        else {
+            aiReply = `Aap ne poocha: "<i>${userText}</i>". <br>FitAI Coach ka mashwara hai ke consistent rahein, apni daily protein requirement complete karein, aur hamesha proper form ke sath training karein!`;
+        }
+
+        // Final AI Answer Render
+        messages.innerHTML += `
+            <div class="flex items-start space-x-3">
+                <div class="bg-emerald-500/20 text-emerald-400 p-2 rounded-lg"><i class="bi bi-robot"></i></div>
+                <div class="bg-slate-800 dark:bg-slate-800 [&:not(.dark)]:bg-slate-100 p-3.5 rounded-2xl text-sm leading-relaxed max-w-[85%] shadow-md">
+                    ${aiReply}
+                </div>
+            </div>
+        `;
+        messages.scrollTop = messages.scrollHeight;
+    }, 1000);
+}
+    </script>
+</body>
+</html>
